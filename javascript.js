@@ -14,38 +14,69 @@ function getHumanChoice () {
     return prompt("Rock, Paper or Scissors?");
 }
 
-let humanScore = 0;
-let computerScore = 0;
+function showCurrentScore (humanScore, computerScore) {
+    console.log("Your current score is " + humanScore + ".");
+    console.log("Computer's current score is " + computerScore + ".");
+}
+
+
 
 function playRound (computerChoice, humanChoice) {
     const upHumanChoice = humanChoice.toUpperCase();
 
     if (computerChoice == upHumanChoice) {
         console.log("It's a draw! You chose " + upHumanChoice + " and the computer also chose " + computerChoice + ".");
+        return -1;
     }
 
     if (computerChoice == "PAPER" && upHumanChoice == "ROCK") {
         console.log("You lose! Paper beats Rock.");
-        computerScore++;
+        return 0;
     } else if (computerChoice == "PAPER" && upHumanChoice == "SCISSORS") {
         console.log("You win! Scissors beats Paper.");
-        humanScore++;
+        return 1;
     } else if (computerChoice == "ROCK" && upHumanChoice == "PAPER") {
         console.log("You win! Paper beats Rock.");
-        humanScore++;
+        return 1;
     } else if (computerChoice == "ROCK" && upHumanChoice == "SCISSORS") {
         console.log("You lose! Rock beats Scissors.");
-        computerScore++;
+        return 0;
     } else if (computerChoice == "SCISSORS" && upHumanChoice == "ROCK") {
         console.log("You win! Rock beats Scissors.");
-        humanScore++;
+        return 1;
     } else if (computerChoice == "SCISSORS" && upHumanChoice == "PAPER") {
         console.log("You lose! Scissors beats Paper.");
-        computerScore++;
+        return 0;
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame () {
+    let humanSelection = 0;
+    let computerSelection = 0;
 
-playRound(computerSelection, humanSelection);
+    let humanScore = 0;
+    let computerScore = 0;
+
+    let winner = 0;
+
+    for (let i = 0; i < 5; i++) {
+        humanSelection = getHumanChoice();
+        computerSelection = getComputerChoice();
+        winner = playRound(computerSelection, humanSelection);
+
+        if (winner == 0) {
+            computerScore++;
+        } else if (winner == 1) {
+            humanScore++;
+        }
+
+        showCurrentScore(humanScore, computerScore);
+
+         if (computerScore == 3 || humanScore == 3) {
+            console.log("Game Over.");
+            return;
+        }
+    }
+}
+
+playGame();
