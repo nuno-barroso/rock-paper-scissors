@@ -34,6 +34,15 @@ function roundDescription (winner, computerChoice, humanChoice) {
     }
 }
 
+function endGame(humanScore) {
+  const description = document.querySelector("#round-description");
+
+  if (humanScore == 5) {
+    description.textContent = "You won the game!";
+  } else {
+    description.textContent = "The computer won the game!";
+  }
+}
 
 function playRound (computerChoice, humanChoice) {
     const upHumanChoice = humanChoice.toUpperCase();
@@ -89,42 +98,52 @@ function playGame () {
     const scissors = document.getElementById("scissors");
 
     
-            rock.addEventListener("click", (e) => {
-                computerSelection = getComputerChoice();
-                winner=playRound(computerSelection, e.target.value);
-                if (winner == 0) {
-                    computerScore++;
-                } else if (winner == 1) {
-                    humanScore++;
-                }
-                showCurrentScore(humanScore, computerScore);
-            });
+    rock.addEventListener("click", (e) => {
+        computerSelection = getComputerChoice();
+        winner=playRound(computerSelection, e.target.value);
+        if (winner == 0) {
+            computerScore++;
+        } else if (winner == 1) {
+            humanScore++;
+        }
+        showCurrentScore(humanScore, computerScore);
 
-            paper.addEventListener("click", (e) => {
-                computerSelection = getComputerChoice();
-                winner=playRound(computerSelection, e.target.value);
-                playRound(computerSelection, e.target.value);
-                if (winner == 0) {
-                    computerScore++;
-                } else if (winner == 1) {
-                    humanScore++;
-                }
-                showCurrentScore(humanScore, computerScore);
-            });
+        if (humanScore == 5 || computerScore == 5) {
+            endGame(humanScore);
+        };
+    });
 
-            scissors.addEventListener("click", (e) => {
-                computerSelection = getComputerChoice();
-                winner=playRound(computerSelection, e.target.value);
-                playRound(computerSelection, e.target.value);
-                if (winner == 0) {
-                    computerScore++;
-                } else if (winner == 1) {
-                    humanScore++;
-                }
-                showCurrentScore(humanScore, computerScore);
-            });
+    paper.addEventListener("click", (e) => {
+        computerSelection = getComputerChoice();
+        winner=playRound(computerSelection, e.target.value);
+        playRound(computerSelection, e.target.value);
+        if (winner == 0) {
+            computerScore++;
+        } else if (winner == 1) {
+            humanScore++;
+        }
+        showCurrentScore(humanScore, computerScore);
 
+        if (humanScore == 5 || computerScore == 5) {
+            endGame(humanScore);
+        };
+    });
 
+    scissors.addEventListener("click", (e) => {
+        computerSelection = getComputerChoice();
+        winner=playRound(computerSelection, e.target.value);
+        playRound(computerSelection, e.target.value);
+        if (winner == 0) {
+            computerScore++;
+        } else if (winner == 1) {
+            humanScore++;
+        }
+        showCurrentScore(humanScore, computerScore);
+
+        if (humanScore == 5 || computerScore == 5) {
+            endGame(humanScore);
+        };
+    });
 }
 
 playGame();
